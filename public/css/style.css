@@ -1,0 +1,16 @@
+#sidemenu{
+    width:20%;
+    
+}
+#mainmenu{
+    margin-bottom: 10px;
+ 
+    
+}
+  #content{
+       
+        float:right;
+        margin-right:100px;
+        width:800px;
+        height:800px;
+    }
