@@ -3,8 +3,28 @@ var router=express.Router();
 var passport=require('passport');
 var localStrategy=require('passport-local');
 var Admin=require('../models/admin');
-router.get('/',isloggedin,function(req,res){
+/*router.use(function(req,res,next){
+    res.locals.currentuser=req.admin;
+    next();
+});
+*/
+
+router.get('/',isloggedin,function(req,res,next){
+    var currentuser=req.user.role;
+    if(currentuser.toLowerCase()=="admin")
+        {
+    console.log(req.user);
+    next();
+        }
+    else{
+        //res.render('userindex');
+        res.redirect('/users');
+    }
+    
+},function(req,res){
 res.render('adashboard');
+  //  console.log(req.user.role);
+    
 });
 router.get('/use',function(req,res){
   res.render('ausers');
@@ -24,15 +44,16 @@ router.get('/classes',function(req,res){
 router.get('/feedback',function(req,res){
     res.render('afeedback');
 });
+/*
 //AUTH ROUTES
 router.get('/register',function(req,res){
     res.render('aregister');
 });
 router.post('/register',function(req,res){
-   Admin.register({username:req.body.username},req.body.password,function(err,admin){
+   Admin.register({username:req.body.username,role:req.body.role},req.body.password,function(err,admin){
        if(err){
            console.log(err);
-           return res.redirect('/register');
+           return res.redirect('/admin/register');
        }
        else{
          passport.authenticate("local")(req,res,function(){
@@ -45,6 +66,8 @@ router.post('/register',function(req,res){
 });
 router.get('/login',function(req,res){
     res.render('alogin');
+   // reroute();
+    
 });
 router.post('/login',passport.authenticate("local",{
     successRediect:'/admin',
@@ -57,7 +80,7 @@ router.get('/logout',function(req,res){
     req.logout();
     res.redirect('/');
 });
-
+*/
 function isloggedin(req,res,next){
     if(req.isAuthenticated()){
         return next();

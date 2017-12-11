@@ -2,7 +2,6 @@ var express=require('express');
 var router=express.Router();
 var passport=require('passport');
 var localStrategy=require('passport-local');
-var User=require('../models/user');
 router.get('/',isloggedin,function(req,res){
     //console.log('dashboard USERS');
     res.render('userindex');
@@ -17,6 +16,7 @@ router.get('/classes',function(req,res){
     res.render('uclasses');
 });
 //AUTH ROUTES
+/*
 router.get('/register',function(req,res){
     res.render('aregister');
 });
@@ -36,20 +36,18 @@ router.post('/register',function(req,res){
    });
 });
 router.get('/login',function(req,res){
-    res.render('ulogin');
+    res.render('alogin');
 });
 router.post('/login',passport.authenticate("local",{
     successRediect:'/userindex',
     failureRedirect:'/login'
-}),function(req,res){
-    
+}),function(req,res){   
 });
-
 router.get('/logout',function(req,res){
     req.logout();
     res.redirect('/');
 });
-
+*/
 function isloggedin(req,res,next){
     if(req.isAuthenticated()){
         return next();
